@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+
+function show_usage() {
+    echo '  Usage: ./newcwe <cwe id> [example num]'
+    echo '      creat a cwe verification with $(example num) examples(default to 0)'
+    echo '  Exit'
+}
+
+id=
+examples=0
+
+if [ "$#" = "1" ]; then 
+    id="$1"
+elif [ "$#" = "2" ]; then
+    id="$1"
+    examples="$2"
+else 
+    show_usage
+    exit 1
+fi
+
+src="CWE_LIST/src/CWE_${id}.c"
+
+[ ! -f "$src" ] && {
+    touch "$src"
+    touch "CWE_LIST/include/CWE_${id}.h"
+
+    echo "" >> "$src"
+    echo "#include \"../include/CWE_${id}.h\"" >> "$src"
+    echo "" >> "$src"
+}
+
+pro_base="avc_projects/proofs/CWE_${id}"
+mkdir -p "${pro_base}"
+
+for ((i = 0; i < ${examples}; ++i)) do
+    pro_pos="${pro_base}/Example_$((i+1))"
+    mkdir -p "${pro_pos}"
+    touch "${pro_pos}/config.json"
+
+    harness_file="${pro_pos}/cwe_${id}_example$((i+1))_harness.c"
+    touch "${harness_file}"
+done

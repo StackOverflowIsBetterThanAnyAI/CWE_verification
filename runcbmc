@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+
+function show_usage() {
+    echo '  Usage: ./runcbmc <cwe id> <function name>'
+    echo '      run cbmc on a source file'
+    echo '  Exit'
+}
+
+[ "$#" != "2" ] && {
+    show_usage
+    exit 1
+}
+
+f="CWE_LIST/src/CWE_$1.c"
+
+cbmc "$f" \
+    --function "$2" \
+    --unwind 30 \
+    --bounds-check \
+    --pointer-check \
+    --div-by-zero-check \
+    --signed-overflow-check \
+    --unsigned-overflow-check \
+    --pointer-overflow-check \
+    --conversion-check \
+    --undefined-shift-check \
+    --float-overflow-check \
+    --trace \
+    >1.txt 2>&1
+
+cat 1.txt | grep 'FAILURE'

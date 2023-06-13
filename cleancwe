@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+function show_usage() {
+    echo '  Usage: ./cleancwe <cwe id>'
+    echo '      clear a cwe verification'
+    echo '  Exit'
+}
+
+[ "$#" != "1" ] && {
+    show_usage
+    exit 1
+}
+
+rm -rf "CWE_LIST/src/CWE_$1.c"
+rm -rf "CWE_LIST/include/CWE_$1.h"
+rm -rf "avc_projects/proofs/CWE_$1"
