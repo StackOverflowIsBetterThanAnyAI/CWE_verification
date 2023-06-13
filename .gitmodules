@@ -1,0 +1,3 @@
+[submodule "avc_projects/stubs/libc/libc_stubs"]
+	path = avc_projects/stubs/libc/libc_stubs
+	url = https://github.com/ItaZure/libc_stubs.git
