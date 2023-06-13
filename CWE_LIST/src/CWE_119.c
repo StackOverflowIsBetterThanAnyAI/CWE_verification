@@ -10,6 +10,7 @@
 
 /*
  * Example 1
+ *
  * This example takes an IP address from a user, verifies that it is well formed and then looks up the hostname and copies it into a buffer.
  * This function allocates a buffer of 64 bytes to store the hostname, however there is no guarantee that the hostname will not be larger than 64 bytes. If an attacker specifies an address which resolves to a very large hostname, then the function may overwrite sensitive data or even relinquish control flow to the attacker.
  */ 
@@ -71,6 +72,7 @@ char * copy_input(char *user_supplied_string){
 
 /*
  * Example 3
+ *
  * The following example asks a user for an offset into an array to select an item.
  * The programmer allows the user to specify which element in the list to select,
  * however an attacker can provide an out-of-bounds offset, resulting in a buffer over-read.
