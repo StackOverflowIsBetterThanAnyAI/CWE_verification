@@ -61,6 +61,14 @@ src="CWE_LIST/src/CWE_${id}.c"
     echo "" >> "$src"
     echo "#include \"CWE_${id}.h\"" >> "$src"
     echo "" >> "$src"
+    for ((i = 0; i < ${examples}; ++i)) do
+        echo "/**" >> "$src"
+        echo " * @attention need to verify" >> "$src"
+        echo " */" >> "$src"
+        echo "void cwe_${id}_example$((i+1))()" >> "$src"
+        echo "{}" >> "$src"
+        echo ""  >> "$src"
+    done
 }
 
 pro_base="avc_projects/proofs/CWE_${id}"
