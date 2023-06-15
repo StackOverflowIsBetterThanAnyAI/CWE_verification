@@ -1,9 +1,10 @@
-#include <stdlib.h>
+
+#include "CWE_124.h"
 
 /**
  * @attention need to verify
  */
-char *cwe124_example1(char *strMessage, int length)
+char *cwe_124_example1(char *strMessage, int length)
 {
     char *retMessage;
 
@@ -41,7 +42,7 @@ int find(char *s, char c) {
 /**
  * @attention need to verify
  */
-void cwe124_example2() {
+void cwe_124_example2() {
     char destBuf[10];
     char srcBuf[10];
     char ch;

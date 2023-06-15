@@ -6,6 +6,24 @@ function show_usage() {
     echo '  Exit'
 }
 
+function generate_file() {
+    while [ "$1" ]; do
+        [ -f "$1" ] && break
+        touch "$1"
+        echo "generated $1"
+        shift
+    done
+}
+
+function make_dir() {
+    while [ "$1" ]; do
+        [ -d "$1" ] && break
+        mkdir -p "$1"
+        echo "maked dir $1"
+        shift
+    done
+}
+
 id=
 examples=0
 
@@ -19,25 +37,59 @@ else
     exit 1
 fi
 
+header="CWE_LIST/include/CWE_${id}.h"
+
+[ ! -f "$header" ] && {
+    generate_file "$header"
+
+    echo "" >> "$header"
+    echo "/* add header files */" >> "$header"
+    echo "" >> "$header"
+    echo "/* example function must be declared here*/" >> "$header"
+    echo "" >> "$header"
+
+    for ((i = 0; i < ${examples}; ++i)) do
+        echo "void cwe_${id}_example$((i+1))();" >> "$header"
+    done
+}
+
 src="CWE_LIST/src/CWE_${id}.c"
 
 [ ! -f "$src" ] && {
-    touch "$src"
-    touch "CWE_LIST/include/CWE_${id}.h"
+    generate_file "$src"
 
     echo "" >> "$src"
-    echo "#include \"../include/CWE_${id}.h\"" >> "$src"
+    echo "#include \"CWE_${id}.h\"" >> "$src"
     echo "" >> "$src"
 }
 
 pro_base="avc_projects/proofs/CWE_${id}"
-mkdir -p "${pro_base}"
+make_dir "$pro_base"
 
 for ((i = 0; i < ${examples}; ++i)) do
     pro_pos="${pro_base}/Example_$((i+1))"
-    mkdir -p "${pro_pos}"
-    touch "${pro_pos}/config.json"
-
+    make_dir "$pro_pos"
+    
+    conf_file="${pro_pos}/config.json"
     harness_file="${pro_pos}/cwe_${id}_example$((i+1))_harness.c"
-    touch "${harness_file}"
+    generate_file "$conf_file" "$harness_file"
+
+    echo "" >> "$harness_file"
+    echo "#include \"proof_helpers/proof_helper.h\"" >> "$harness_file"
+    echo "#include \"CWE_${id}.h\"" >> "$harness_file"
+    echo "" >> "$harness_file"
+    echo "void harness(void)" >> "$harness_file"
+    echo "{" >> "$harness_file"
+    echo "" >> "$harness_file"
+    echo -e "\t/* 初始化函数变量 */" >> "$harness_file"
+    echo "" >> "$harness_file"
+    echo -e "\t/* 前置条件 */" >> "$harness_file"
+    echo "" >> "$harness_file"
+    echo -e "\tcwe_${id}_example$((i+1))( /* 插入参数 */ );" >> "$harness_file"
+    echo "" >> "$harness_file"
+    echo -e "\t/* 后置条件 */" >> "$harness_file"
+    echo "" >> "$harness_file"
+    echo "}" >> "$harness_file"
 done
+
+echo "generation completed"

@@ -1,5 +1,5 @@
 
-#include "../include/CWE_190.h"
+#include "CWE_190.h"
 
 /**
  * example 1
@@ -7,8 +7,8 @@
 
 /**
  * @attention need to verify
- */
-void cwe190_example1()
+*/
+void cwe_190_example1()
 {
     img_t *table_ptr;
     int num_imgs;
@@ -22,7 +22,9 @@ void cwe190_example1()
 
 char **xmalloc(unsigned int size)
 {
-    return (char **)malloc(size);
+    char **res = malloc(size);
+    __CPROVER_assume(res != NULL);
+    return res;
 }
 
 char *packet_get_string(void *p)
@@ -34,8 +36,8 @@ char *packet_get_string(void *p)
 
 /**
  * @attention need to verify
- */
-void cwe190_example2()
+*/
+void cwe_190_example2()
 {
     int nresp;
     char **response;
@@ -62,8 +64,8 @@ int getFromInput(char *s)
 
 /**
  * @attention need to verify
- */
-void cwe190_example3()
+*/
+void cwe_190_example3()
 {
     short int bytesRec = 0;
     char buf[SOMEBIGNUM];
@@ -84,8 +86,8 @@ float calculateRevenueForQuarter(short quarterSold) {}
 
 /**
  * @attention need to verify
- */
-int cwe190_example4()
+*/
+int cwe_190_example4()
 {
 
     // Variable for sales revenue for the quarter
@@ -105,4 +107,3 @@ int cwe190_example4()
 
     return 0;
 }
-
