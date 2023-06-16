@@ -1,4 +1,6 @@
 
+/* add header files */
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -13,3 +15,9 @@ struct hostent {
     char *h_name;
 };
 
+/* example function must be declared here*/
+
+void cwe_120_example1();
+void cwe_120_example2(char *);
+void cwe_120_example3();
+void cwe_120_example4();

@@ -13,6 +13,14 @@
 |[415](https://cwe.mitre.org/data/definitions/415.html) |  Double Free | The product calls free() twice on the same memory address, potentially leading to modification of unexpected memory locations. | ✅ |
 |[416](https://cwe.mitre.org/data/definitions/416.html) |  Use After Free | Referencing memory after it has been freed can cause a program to crash, use unexpected values, or execute code. | INCOMPLETE |
 
+# 构建方法
+
+- 使用newcwe脚本创建项目
+- 使用runcbmc脚本进行验证
+- 建议阅读脚本的说明以更快地创建和验证项目
+
+
+
 ## 贡献名单
 
 排名不分先后

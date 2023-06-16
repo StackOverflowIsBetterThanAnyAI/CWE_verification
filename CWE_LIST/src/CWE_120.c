@@ -1,5 +1,5 @@
 
-#include "../include/CWE_120.h"
+#include "CWE_120.h"
 
 /**
  * example1
@@ -21,7 +21,7 @@ int scanf(const char *s1, char *s2)
 /**
  * @attention need to verify
  */
-void cwe120_example1()
+void cwe_120_example1()
 {
     char last_name[20];
     printf("Enter your last name: ");
@@ -36,7 +36,7 @@ void cwe120_example1()
 /**
  * @attention need to verify
  */
-void cwe120_example2(char *string)
+void cwe_120_example2(char *string)
 {
     char buf[24];
     strcpy(buf, string);
@@ -61,7 +61,7 @@ struct hostent *gethostbyaddr(char *s, uint64_t size, int flag)
 
 void close(int fd) {}
 
-void cwe120_example4()
+void cwe_120_example4()
 {
     struct hostent *clienthp;
     char hostname[MAX_LEN];

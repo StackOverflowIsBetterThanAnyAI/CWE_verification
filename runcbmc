@@ -1,7 +1,20 @@
 #!/usr/bin/bash
 
+# this scripts can run cbmc on harness.
+# before starting you have to install cbmc and goto-cc.
+
+# make sure your files and directories are named correctly.
+# for example run "./runcbmc 120 4" can verify the example4 from cwe120.
+# however your "CWE_LIST/src/" directory must have file "CWE_120.c" which
+# contains function "cwe_120_example4". In addition, your 
+# "avc_projects/proofs/CWE_120/Example_4" directory must have file 
+# "cwe_120_example4_harness.c" which contains function "harness".
+
+# you can ignore the above points if you create your project by the
+# "newcwe" scripts, it can generate corresponding files and directories.
+
 function show_usage() {
-    echo '  Usage: ./runcbmc <cwe id> <function name>'
+    echo '  Usage: ./runcbmc <cwe id> <example id>'
     echo '      run cbmc on a source file'
     echo '  Exit'
 }
@@ -11,10 +24,19 @@ function show_usage() {
     exit 1
 }
 
-f="CWE_LIST/src/CWE_$1.c"
+src="CWE_LIST/src/CWE_$1.c"
+harness="avc_projects/proofs/CWE_$1/Example_$2/cwe_${1}_example${2}_harness.c"
 
-cbmc "$f" \
-    --function "$2" \
+goto-cc "$src" \
+        "$harness" \
+        -I "avc_projects/includes" \
+        -I "CWE_LIST/include" \
+        --function "harness" \
+        -o "harness.goto"
+
+# change the cbmc parameters based on your needs
+
+cbmc "harness.goto" \
     --unwind 30 \
     --bounds-check \
     --pointer-check \
@@ -27,5 +49,7 @@ cbmc "$f" \
     --float-overflow-check \
     --trace \
     >1.txt 2>&1
+
+rm -rf "harness.goto"
 
 cat 1.txt | grep 'FAILURE'

@@ -1,16 +1,16 @@
-/* cwe197_example1 的验证基准文件 */
 
 #include "proof_helpers/proof_helper.h"
+#include "CWE_197.h"
 
 void harness(void)
 {
 
-  /* 初始化函数变量 */
+	/* 初始化函数变量 */
 
-  /* 前置条件 */
+	/* 前置条件 */
 
-  cwe197_example1( /* 插入参数 */ );
+	cwe_197_example1( /* 插入参数 */ );
 
-  /* 后置条件 */
+	/* 后置条件 */
 
 }
